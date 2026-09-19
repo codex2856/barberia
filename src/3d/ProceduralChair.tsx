@@ -15,7 +15,7 @@ const chromeMaterial = (
 );
 const darkMetalMaterial = <meshStandardMaterial color="#232327" metalness={0.85} roughness={0.35} />;
 const leatherMaterial = (
-  <meshPhysicalMaterial color="#1a1214" roughness={0.55} clearcoat={0.45} clearcoatRoughness={0.32} />
+  <meshPhysicalMaterial color="#131013" roughness={0.7} clearcoat={0.22} clearcoatRoughness={0.55} />
 );
 const goldMaterial = <meshStandardMaterial color="#c9a24b" metalness={1} roughness={0.26} />;
 

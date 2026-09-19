@@ -33,8 +33,10 @@ export function StepTime() {
       )}
 
       {slots !== null && slots.length > 0 && (
-        <div className="mt-5 grid grid-cols-3 gap-2.5 sm:grid-cols-4">
-          {slots.map((slot) => {
+        <>
+          <p className="mt-2 text-xs text-bone-faint">Las horas tachadas ya están reservadas o ya pasaron.</p>
+          <div className="mt-4 grid grid-cols-3 gap-2.5 sm:grid-cols-4">
+            {slots.map((slot) => {
             const selected = slot.time === time;
             return (
               <button
@@ -54,9 +56,10 @@ export function StepTime() {
               >
                 {slot.time}
               </button>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        </>
       )}
     </div>
   );

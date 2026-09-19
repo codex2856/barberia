@@ -64,7 +64,7 @@ export const mockAvailabilityProvider: AvailabilityProvider = {
     if (isSunday) return [];
 
     return ALL_DAY_SLOTS.map((time, index) => {
-      const isOccupied = (seed + index * 7) % 5 === 0;
+      const isOccupied = (seed + index * 7) % 7 === 0;
       const isPast = isDateTimeInPast(isoDate, time);
       return {
         time,

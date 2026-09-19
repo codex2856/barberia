@@ -63,18 +63,18 @@ export default function BarberChairScene({ heroSelector, isMobile, lowEnd, reduc
       camera={{ position: [0, 1.15, 4.4], fov: 36 }}
       frameloop={visible ? "always" : "never"}
     >
-      <color attach="background" args={["#0a0a0b"]} />
-      <fog attach="fog" args={["#0a0a0b", 6, 12]} />
+      <color attach="background" args={["#f0eee7"]} />
+      <fog attach="fog" args={["#f0eee7", 7, 15]} />
       <SceneLighting enableShadows={enableShadows} />
       <PointerRig subtle={reducedMotion || isMobile} />
       <ScrollCameraRig progressRef={scrollProgress} active={!reducedMotion} />
       {!lowEnd && !reducedMotion && <DustParticles />}
       {!lowEnd && (
-        <ContactShadows position={[0, -1.2, 0]} opacity={0.55} scale={6} blur={2.4} far={2} color="#000000" />
+        <ContactShadows position={[0, -1.2, 0]} opacity={0.32} scale={6} blur={2} far={2} color="#000000" />
       )}
       <mesh position={[0, -1.201, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
         <planeGeometry args={[20, 20]} />
-        <meshStandardMaterial color="#111113" roughness={0.9} metalness={0.05} />
+        <meshStandardMaterial color="#f0eee7" roughness={0.95} metalness={0} />
       </mesh>
     </Canvas>
   );
