@@ -81,12 +81,26 @@ function isDateTimeInPast(isoDate: string, time: string): boolean {
   return slotDate.getTime() < Date.now();
 }
 
+/**
+ * Formatea una fecha como YYYY-MM-DD usando SIEMPRE la hora local (nunca
+ * `toISOString`, que convierte a UTC). Mezclar ambos formatos es lo que
+ * causaba que, según la zona horaria del navegador, "hoy" o algún día
+ * de la lista quedara desfasado un día y apareciera sin ningún horario
+ * disponible.
+ */
+function toIsoLocal(date: Date): string {
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
 export function todayIso(): string {
-  return new Date().toISOString().slice(0, 10);
+  return toIsoLocal(new Date());
 }
 
 export function addDaysIso(isoDate: string, days: number): string {
   const date = new Date(`${isoDate}T00:00:00`);
   date.setDate(date.getDate() + days);
-  return date.toISOString().slice(0, 10);
+  return toIsoLocal(date);
 }
