@@ -7,6 +7,8 @@ import { PointerRig } from "./PointerRig";
 import { ScrollCameraRig } from "./ScrollCameraRig";
 import { DustParticles } from "./DustParticles";
 import { getDprCap } from "../utils/device";
+import { useBooking } from "../components/booking/BookingContext";
+import { BarbershopBackdrop } from "./BarbershopBackdrop";
 
 interface CameraFraming {
   z: [number, number];
@@ -31,6 +33,7 @@ interface BarberChairSceneProps {
 export default function BarberChairScene({ heroSelector, isMobile, lowEnd, reducedMotion }: BarberChairSceneProps) {
   const scrollProgress = useRef(0);
   const [visible, setVisible] = useState(true);
+  const { isOpen: bookingOpen } = useBooking();
 
   useEffect(() => {
     if (reducedMotion) return;
@@ -79,10 +82,13 @@ export default function BarberChairScene({ heroSelector, isMobile, lowEnd, reduc
       shadows={enableShadows}
       gl={{ antialias: !lowEnd, alpha: true, powerPreference: "high-performance" }}
       camera={{ position: [0, framing.y[0], framing.z[0]], fov: framing.fov[0] }}
-      frameloop={visible ? "always" : "never"}
+      // Pausa el render 3D cuando el hero no está en pantalla o cuando el
+      // drawer de reserva está abierto encima (evita competir por CPU/GPU
+      // con la app mientras el usuario reserva, y quita jank innecesario).
+      frameloop={visible && !bookingOpen ? "always" : "never"}
     >
-      <color attach="background" args={["#f0eee7"]} />
-      <fog attach="fog" args={["#f0eee7", 7, 15]} />
+      <color attach="background" args={["#3a2a22"]} />
+      <fog attach="fog" args={["#3a2a22", 8, 17]} />
       <SceneLighting enableShadows={enableShadows} />
       <PointerRig subtle={reducedMotion || isMobile} offsetX={chairOffsetX} scale={chairScale} />
       <ScrollCameraRig
@@ -94,12 +100,9 @@ export default function BarberChairScene({ heroSelector, isMobile, lowEnd, reduc
       />
       {!lowEnd && !reducedMotion && <DustParticles />}
       {!lowEnd && (
-        <ContactShadows position={[chairOffsetX, -1.2, 0]} opacity={0.32} scale={6} blur={2} far={2} color="#000000" />
+        <ContactShadows position={[chairOffsetX, -1.2, 0]} opacity={0.4} scale={6} blur={2} far={2} color="#000000" />
       )}
-      <mesh position={[0, -1.201, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-        <planeGeometry args={[20, 20]} />
-        <meshStandardMaterial color="#f0eee7" roughness={0.95} metalness={0} />
-      </mesh>
+      <BarbershopBackdrop enableShadows={enableShadows} showDetails={!lowEnd} />
     </Canvas>
   );
 }

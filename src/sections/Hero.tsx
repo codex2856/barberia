@@ -26,29 +26,26 @@ export function Hero() {
   }, [reducedMotion]);
 
   return (
-    <section
-      id="inicio"
-      className="relative flex h-[100svh] min-h-[640px] w-full items-center overflow-hidden bg-[#f0eee7]"
-    >
+    <section id="inicio" className="relative flex h-[100svh] min-h-[640px] w-full items-center overflow-hidden bg-[#2a1d17]">
       <div className="absolute inset-0">
         <LazyBarberChairScene heroSelector="#inicio" />
       </div>
 
-      {/* leve viñeta clara para dar profundidad sin oscurecer el fondo */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_25%_45%,rgba(255,255,255,0.35),transparent_55%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#f0eee7] via-transparent to-transparent" />
+      {/* degradados para legibilidad del texto sobre la escena 3D */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#2a1d17] via-[#2a1d17]/10 to-[#2a1d17]/40" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#2a1d17]/80 via-transparent to-[#2a1d17]/30" />
 
       <div ref={contentRef} className="relative z-10 mx-auto w-full max-w-7xl px-5 sm:px-8">
         <div className="max-w-xl">
-          <p data-hero-in className="font-body text-xs font-bold uppercase tracking-[0.4em] text-gold-dark">
+          <p data-hero-in className="font-body text-xs font-bold uppercase tracking-[0.4em] text-gold">
             The Barber
           </p>
-          <h1 data-hero-in className="mt-4 font-display text-6xl leading-[0.92] text-void sm:text-7xl md:text-8xl">
+          <h1 data-hero-in className="mt-4 font-display text-6xl leading-[0.92] text-bone sm:text-7xl md:text-8xl">
             TU ESTILO.
             <br />
             TU BARBERÍA.
           </h1>
-          <p data-hero-in className="mt-6 max-w-md text-balance text-base text-charcoal-lighter sm:text-lg">
+          <p data-hero-in className="mt-6 max-w-md text-balance text-base text-bone-dim sm:text-lg">
             Cortes de precisión, barba y una experiencia pensada al detalle. Reserva tu cita en menos de un minuto.
           </p>
           <div data-hero-in className="mt-9">
@@ -59,9 +56,9 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="absolute inset-x-0 bottom-8 z-10 flex flex-col items-center gap-2 text-charcoal-lighter/70">
+      <div className="absolute inset-x-0 bottom-8 z-10 flex flex-col items-center gap-2 text-bone-faint">
         <span className="text-[10px] font-semibold uppercase tracking-[0.35em]">Scroll to explore</span>
-        <span className="h-9 w-px animate-pulse bg-gradient-to-b from-gold-dark to-transparent" aria-hidden />
+        <span className="h-9 w-px animate-pulse bg-gradient-to-b from-gold to-transparent" aria-hidden />
       </div>
     </section>
   );

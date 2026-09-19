@@ -27,10 +27,6 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // El Hero tiene fondo claro; el resto de la página es oscuro. El navbar
-  // invierte sus colores de texto según esté sobre uno u otro.
-  const onLightHero = !scrolled;
-
   return (
     <header
       className={`fixed inset-x-0 top-0 z-[80] transition-colors duration-500 ${
@@ -38,10 +34,7 @@ export function Navbar() {
       }`}
     >
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:h-20 sm:px-8" aria-label="Navegación principal">
-        <a
-          href="#inicio"
-          className={`font-display text-xl tracking-[0.12em] sm:text-2xl ${onLightHero ? "text-void" : "text-bone"}`}
-        >
+        <a href="#inicio" className="font-display text-xl tracking-[0.12em] text-bone sm:text-2xl">
           {barbershop.name}
         </a>
 
@@ -50,9 +43,7 @@ export function Navbar() {
             <li key={link.href}>
               <a
                 href={link.href}
-                className={`text-xs font-semibold uppercase tracking-[0.18em] transition-colors hover:text-gold-dark ${
-                  onLightHero ? "text-charcoal-lighter" : "text-bone-dim"
-                }`}
+                className="text-xs font-semibold uppercase tracking-[0.18em] text-bone-dim transition-colors hover:text-gold"
               >
                 {link.label}
               </a>
@@ -68,7 +59,7 @@ export function Navbar() {
 
         <button
           type="button"
-          className={`lg:hidden ${onLightHero ? "text-void" : "text-bone"}`}
+          className="text-bone lg:hidden"
           aria-label={mobileOpen ? "Cerrar menú" : "Abrir menú"}
           aria-expanded={mobileOpen}
           onClick={() => setMobileOpen((prev) => !prev)}
