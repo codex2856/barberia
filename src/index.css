@@ -94,18 +94,19 @@
   }
 }
 
-/* cursor personalizado (desktop, sin hover:none) */
-.custom-cursor {
+/* cursor personalizado: navaja de barbero (desktop, puntero fino) */
+html.razor-cursor-active,
+html.razor-cursor-active a,
+html.razor-cursor-active button {
+  cursor: none;
+}
+
+.razor-cursor {
   position: fixed;
   top: 0;
   left: 0;
-  width: 22px;
-  height: 22px;
-  border-radius: 999px;
-  border: 1px solid rgba(201, 162, 75, 0.7);
   pointer-events: none;
   z-index: 100;
-  transform: translate(-50%, -50%);
-  mix-blend-mode: difference;
   will-change: transform;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
 }
