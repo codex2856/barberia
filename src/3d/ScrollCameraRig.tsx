@@ -5,20 +5,32 @@ import type { MutableRefObject } from "react";
 interface ScrollCameraRigProps {
   /** 0 al inicio del hero, 1 cuando el usuario ya hizo scroll fuera de él. */
   progressRef: MutableRefObject<number>;
-  active: boolean;
+  /** Distancia de la cámara al inicio y al final del scroll del hero. */
+  zRange: [number, number];
+  /** Altura de la cámara al inicio y al final del scroll del hero. */
+  yRange: [number, number];
+  /** Campo de visión al inicio y al final del scroll del hero. */
+  fovRange: [number, number];
+  /** Punto fijo al que mira la cámara (no se anima con el scroll). */
+  lookAt: [number, number];
 }
 
-/** Mueve suavemente la cámara mientras el usuario hace scroll por el hero. */
-export function ScrollCameraRig({ progressRef, active }: ScrollCameraRigProps) {
+/**
+ * Encuadra la cámara sobre la silla y, si hay scroll dentro del hero
+ * (progressRef pasa de 0 a 1), la aleja suavemente. Con
+ * prefers-reduced-motion, progressRef nunca cambia de 0, así que esto
+ * simplemente mantiene el encuadre inicial fijo — necesario para que el
+ * lookAt se aplique también en ese caso.
+ */
+export function ScrollCameraRig({ progressRef, zRange, yRange, fovRange, lookAt }: ScrollCameraRigProps) {
   useFrame(({ camera }) => {
-    if (!active) return;
     const p = progressRef.current;
     const perspective = camera as THREE.PerspectiveCamera;
-    perspective.position.z = THREE.MathUtils.lerp(4.4, 5.7, p);
-    perspective.position.y = THREE.MathUtils.lerp(1.15, 1.75, p);
-    perspective.fov = THREE.MathUtils.lerp(36, 30, p);
+    perspective.position.z = THREE.MathUtils.lerp(zRange[0], zRange[1], p);
+    perspective.position.y = THREE.MathUtils.lerp(yRange[0], yRange[1], p);
+    perspective.fov = THREE.MathUtils.lerp(fovRange[0], fovRange[1], p);
     perspective.updateProjectionMatrix();
-    perspective.lookAt(0, 1.05, 0);
+    perspective.lookAt(lookAt[0], lookAt[1], 0);
   });
   return null;
 }

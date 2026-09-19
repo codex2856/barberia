@@ -94,14 +94,14 @@
   }
 }
 
-/* cursor personalizado: navaja de barbero (desktop, puntero fino) */
-html.razor-cursor-active,
-html.razor-cursor-active a,
-html.razor-cursor-active button {
+/* cursor personalizado: máquina de afeitar (desktop, puntero fino) */
+html.clipper-cursor-active,
+html.clipper-cursor-active a,
+html.clipper-cursor-active button {
   cursor: none;
 }
 
-.razor-cursor {
+.clipper-cursor {
   position: fixed;
   top: 0;
   left: 0;

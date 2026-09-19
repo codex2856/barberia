@@ -64,7 +64,12 @@ export const mockAvailabilityProvider: AvailabilityProvider = {
     if (isSunday) return [];
 
     return ALL_DAY_SLOTS.map((time, index) => {
-      const isOccupied = (seed + index * 7) % 7 === 0;
+      // Un hash por slot (en vez de una fórmula aritmética sobre `index`)
+      // evita degeneraciones: `(seed + index * 7) % 7` es SIEMPRE 0 o
+      // SIEMPRE distinto de 0 para todo `index` (index*7 es múltiplo de 7),
+      // así que el día entero quedaba con todas las horas ocupadas o
+      // ninguna, en vez de variar hora a hora.
+      const isOccupied = hashString(`${seed}:${index}`) % 6 === 0;
       const isPast = isDateTimeInPast(isoDate, time);
       return {
         time,

@@ -6,6 +6,10 @@ import { BarberChair } from "./BarberChair";
 interface PointerRigProps {
   /** Desactiva la inclinación vertical y reduce la sensibilidad (reduced motion). */
   subtle: boolean;
+  /** Desplazamiento horizontal de la silla (0 en móvil, centrada). */
+  offsetX: number;
+  /** Escala de la silla (más pequeña en móvil para no tapar el texto). */
+  scale: number;
 }
 
 const MAX_YAW = 0.62;
@@ -17,7 +21,7 @@ const DRAG_SENSITIVITY = 3.2;
  * drag/swipe (touch). El movimiento se amortigua cada frame para que
  * nunca se sienta brusco.
  */
-export function PointerRig({ subtle }: PointerRigProps) {
+export function PointerRig({ subtle, offsetX, scale }: PointerRigProps) {
   const groupRef = useRef<THREE.Group>(null!);
   const target = useRef({ x: 0, y: 0 });
   const drag = useRef({ active: false, lastX: 0 });
@@ -69,5 +73,5 @@ export function PointerRig({ subtle }: PointerRigProps) {
     groupRef.current.rotation.x += (targetPitch - groupRef.current.rotation.x) * smoothing;
   });
 
-  return <BarberChair ref={groupRef} position={[0, -1.2, 0]} />;
+  return <BarberChair ref={groupRef} position={[offsetX, -1.2, 0]} scale={scale} />;
 }
