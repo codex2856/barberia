@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - claude/travel-itinerary-planner-8m6x8p
+      - claude/laughing-darwin-jxc9ti
   workflow_dispatch:
 
 permissions:
