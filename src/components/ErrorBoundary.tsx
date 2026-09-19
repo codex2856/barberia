@@ -1,45 +1,32 @@
-import { Component, type ErrorInfo, type ReactNode } from 'react';
+import { Component, type ErrorInfo, type ReactNode } from "react";
 
-interface Props {
+interface ErrorBoundaryProps {
   children: ReactNode;
 }
 
-interface State {
-  error: Error | null;
+interface ErrorBoundaryState {
+  hasError: boolean;
 }
 
-export class ErrorBoundary extends Component<Props, State> {
-  state: State = { error: null };
+export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  state: ErrorBoundaryState = { hasError: false };
 
-  static getDerivedStateFromError(error: Error): State {
-    return { error };
+  static getDerivedStateFromError(): ErrorBoundaryState {
+    return { hasError: true };
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
-    console.error('Trip Optimizer crashed:', error, info.componentStack);
+    console.error("Error inesperado en la aplicación:", error, info);
   }
 
-  handleReset = () => {
-    // a full reload clears whatever state triggered the crash, not just the error flag
-    window.location.reload();
-  };
-
   render() {
-    if (this.state.error) {
+    if (this.state.hasError) {
       return (
-        <div className="mx-auto flex min-h-screen max-w-lg flex-col items-center justify-center gap-4 px-6 text-center">
-          <h1 className="font-display text-2xl font-semibold text-ink">Algo se rompió</h1>
-          <p className="text-sm text-ink-soft">
-            Tuvimos un error inesperado armando tu itinerario. Puedes intentar de nuevo — si vuelve a pasar,
-            cuéntame qué estabas haciendo justo antes.
+        <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-void px-6 text-center text-bone">
+          <p className="font-display text-3xl">Algo salió mal</p>
+          <p className="max-w-sm text-bone-dim">
+            Recarga la página para continuar. Si el problema persiste, contacta con nosotros directamente.
           </p>
-          <button
-            type="button"
-            onClick={this.handleReset}
-            className="rounded-2xl bg-terracotta px-5 py-3 text-sm font-semibold text-paper shadow-soft"
-          >
-            Volver a intentar
-          </button>
         </div>
       );
     }
