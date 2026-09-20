@@ -1,5 +1,6 @@
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
+import { FloatingWhatsAppButton } from "./components/FloatingWhatsAppButton";
 import { CustomCursor } from "./components/ui/CustomCursor";
 import { BookingProvider } from "./components/booking/BookingContext";
 import { BookingDrawer } from "./components/booking/BookingDrawer";
@@ -31,6 +32,7 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
+      <FloatingWhatsAppButton />
       <BookingDrawer />
     </BookingProvider>
   );
