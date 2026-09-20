@@ -1,14 +1,15 @@
 import { useState, type FormEvent } from "react";
 import { useBooking } from "../BookingContext";
-import { submitBooking } from "../../../data/bookingService";
+import { submitBooking, SlotUnavailableError } from "../../../data/bookingService";
 import { Button } from "../../ui/Button";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function StepDetails() {
-  const { details, setDetails, serviceId, date, time, setConfirmationId } = useBooking();
+  const { details, setDetails, serviceId, date, time, setConfirmationId, goToStep } = useBooking();
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [slotTaken, setSlotTaken] = useState(false);
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -28,10 +29,18 @@ export function StepDetails() {
     }
 
     setError(null);
+    setSlotTaken(false);
     setSubmitting(true);
     try {
       const result = await submitBooking({ serviceId, date, time, ...details });
       setConfirmationId(result.confirmationId);
+    } catch (err) {
+      if (err instanceof SlotUnavailableError) {
+        setSlotTaken(true);
+        setError("Justo se acaba de reservar esa hora. Elige otra, por favor.");
+      } else {
+        setError("No se pudo confirmar la cita. Inténtalo de nuevo.");
+      }
     } finally {
       setSubmitting(false);
     }
@@ -81,9 +90,15 @@ export function StepDetails() {
           </p>
         )}
 
-        <Button type="submit" disabled={submitting} className="mt-2 w-full">
-          {submitting ? "Confirmando…" : "Confirmar cita"}
-        </Button>
+        {slotTaken ? (
+          <Button type="button" onClick={() => goToStep("time")} className="mt-2 w-full">
+            Elegir otra hora
+          </Button>
+        ) : (
+          <Button type="submit" disabled={submitting} className="mt-2 w-full">
+            {submitting ? "Confirmando…" : "Confirmar cita"}
+          </Button>
+        )}
       </div>
     </form>
   );

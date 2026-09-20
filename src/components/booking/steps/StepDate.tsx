@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { addDaysIso, todayIso } from "../../../data/availability";
+import { getScheduleForWeekday } from "../../../data/schedule";
 import { useBooking } from "../BookingContext";
 
 const WEEKDAY_FORMATTER = new Intl.DateTimeFormat("es-ES", { weekday: "short" });
@@ -22,13 +23,13 @@ export function StepDate() {
       <div className="mt-5 grid grid-cols-3 gap-2.5 sm:grid-cols-4">
         {days.map((iso) => {
           const d = new Date(`${iso}T00:00:00`);
-          const isSunday = d.getDay() === 0;
+          const isClosed = getScheduleForWeekday(d.getDay()).closed;
           const selected = iso === date;
           return (
             <button
               key={iso}
               type="button"
-              disabled={isSunday}
+              disabled={isClosed}
               onClick={() => setDate(iso)}
               aria-pressed={selected}
               className={`flex flex-col items-center gap-0.5 rounded-xl border px-2 py-3 transition-colors disabled:cursor-not-allowed disabled:opacity-30 ${
