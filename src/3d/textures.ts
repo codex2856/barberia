@@ -110,3 +110,86 @@ export function createWoodFloorTexture(): THREE.CanvasTexture {
 
   return toTexture(canvas, 4, 4);
 }
+
+export function createWoodPanelTexture(): THREE.CanvasTexture {
+  const size = 512;
+  const { canvas, ctx } = makeCanvas(size);
+
+  ctx.fillStyle = "#3a2416";
+  ctx.fillRect(0, 0, size, size);
+
+  const panelW = 128;
+  const cols = Math.ceil(size / panelW) + 1;
+
+  for (let col = 0; col < cols; col++) {
+    const x = col * panelW;
+    const shade = 0.85 + Math.random() * 0.25;
+    const r = Math.round(74 * shade);
+    const g = Math.round(46 * shade);
+    const b = Math.round(28 * shade);
+    ctx.fillStyle = `rgb(${r},${g},${b})`;
+    ctx.fillRect(x + 4, 0, panelW - 8, size);
+
+    // vetas verticales suaves
+    ctx.strokeStyle = "rgba(20,12,6,0.3)";
+    ctx.lineWidth = 1;
+    for (let i = 0; i < 4; i++) {
+      const lx = x + 14 + i * 26 + Math.random() * 6;
+      ctx.beginPath();
+      ctx.moveTo(lx, 0);
+      for (let y = 0; y <= size; y += 32) {
+        ctx.lineTo(lx + Math.sin(y * 0.05 + col) * 2, y);
+      }
+      ctx.stroke();
+    }
+
+    // marco moldurado del panel
+    ctx.strokeStyle = "rgba(10,6,3,0.7)";
+    ctx.lineWidth = 3;
+    ctx.strokeRect(x + 14, 24, panelW - 28, size - 48);
+  }
+
+  return toTexture(canvas, 3, 1);
+}
+
+export function createBarberPoleTexture(): THREE.CanvasTexture {
+  const width = 64;
+  const height = 256;
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext("2d")!;
+
+  ctx.fillStyle = "#f2efe6";
+  ctx.fillRect(0, 0, width, height);
+
+  const stripe = 26;
+  ctx.save();
+  ctx.translate(0, 0);
+  for (let y = -height; y < height * 2; y += stripe * 2) {
+    ctx.fillStyle = "#c23b3b";
+    ctx.beginPath();
+    ctx.moveTo(-width, y);
+    ctx.lineTo(width * 2, y - width * 3);
+    ctx.lineTo(width * 2, y - width * 3 + stripe);
+    ctx.lineTo(-width, y + stripe);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.fillStyle = "#2b3a8f";
+    ctx.beginPath();
+    ctx.moveTo(-width, y + stripe);
+    ctx.lineTo(width * 2, y - width * 3 + stripe);
+    ctx.lineTo(width * 2, y - width * 3 + stripe * 2);
+    ctx.lineTo(-width, y + stripe * 2);
+    ctx.closePath();
+    ctx.fill();
+  }
+  ctx.restore();
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.wrapS = THREE.RepeatWrapping;
+  texture.wrapT = THREE.RepeatWrapping;
+  texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
+}

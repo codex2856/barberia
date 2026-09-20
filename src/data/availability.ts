@@ -63,17 +63,31 @@ export const mockAvailabilityProvider: AvailabilityProvider = {
     const isSunday = date.getDay() === 0;
     if (isSunday) return [];
 
+    // Un hash por slot (en vez de una fórmula aritmética sobre `index`)
+    // evita degeneraciones: `(seed + index * 7) % 7` era SIEMPRE 0 o
+    // SIEMPRE distinto de 0 para todo `index` (index*7 es múltiplo de 7),
+    // así que el día entero quedaba con todas las horas ocupadas o
+    // ninguna, en vez de variar hora a hora.
+    const occupiedFlags = ALL_DAY_SLOTS.map((_, index) => hashString(`${seed}:${index}`) % 6 === 0);
+
+    // Salvaguarda: por más "aleatoria" que sea la simulación, nunca debe
+    // dejar un día con casi todo ocupado — se limita a un máximo de horas
+    // marcadas como ocupadas por día, dando prioridad (al liberar) a las
+    // últimas del listado.
+    const MAX_OCCUPIED_PER_DAY = 5;
+    let occupiedCount = occupiedFlags.filter(Boolean).length;
+    for (let index = occupiedFlags.length - 1; index >= 0 && occupiedCount > MAX_OCCUPIED_PER_DAY; index--) {
+      if (occupiedFlags[index]) {
+        occupiedFlags[index] = false;
+        occupiedCount--;
+      }
+    }
+
     return ALL_DAY_SLOTS.map((time, index) => {
-      // Un hash por slot (en vez de una fórmula aritmética sobre `index`)
-      // evita degeneraciones: `(seed + index * 7) % 7` es SIEMPRE 0 o
-      // SIEMPRE distinto de 0 para todo `index` (index*7 es múltiplo de 7),
-      // así que el día entero quedaba con todas las horas ocupadas o
-      // ninguna, en vez de variar hora a hora.
-      const isOccupied = hashString(`${seed}:${index}`) % 6 === 0;
       const isPast = isDateTimeInPast(isoDate, time);
       return {
         time,
-        available: service !== undefined && !isOccupied && !isPast,
+        available: service !== undefined && !occupiedFlags[index] && !isPast,
       };
     });
   },
