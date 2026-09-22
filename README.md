@@ -29,14 +29,15 @@ src/
   utils/        heurísticas de rendimiento/capacidad del dispositivo
 ```
 
-## La silla 3D
+## El objeto 3D del Hero
 
-Hoy es un modelo procedural (primitivas de Three.js) pensado como
-placeholder: reproduce la silueta de una silla de barbería sin depender de
-un archivo externo. Cuando haya un modelo GLB/GLTF real, basta con:
+Hoy es un poste de barbería procedural (primitivas de Three.js) pensado
+como placeholder: reproduce el símbolo clásico de una barbería sin
+depender de un archivo externo. Cuando haya un modelo GLB/GLTF real, basta
+con:
 
-1. Colocarlo en `public/models/barber-chair.glb`.
-2. Definir `CHAIR_MODEL_URL` en `src/3d/BarberChair.tsx`.
+1. Colocarlo en `public/models/hero-object.glb`.
+2. Definir `HERO_MODEL_URL` en `src/3d/HeroObject.tsx`.
 
 El resto de la interacción (rotación por cursor/drag, reacción al scroll,
 iluminación) no cambia.

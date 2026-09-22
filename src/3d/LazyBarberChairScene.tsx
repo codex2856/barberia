@@ -2,7 +2,7 @@ import { lazy, Suspense } from "react";
 import { useDeviceCapability } from "../hooks/useWebGLSupport";
 import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
 import { useIsMobile } from "../hooks/useMediaQuery";
-import { ChairFallback } from "./ChairFallback";
+import { HeroFallback } from "./HeroFallback";
 
 const BarberChairScene = lazy(() => import("./BarberChairScene"));
 
@@ -27,7 +27,7 @@ export function LazyBarberChairScene({ heroSelector }: LazyBarberChairSceneProps
   const isMobile = useIsMobile();
 
   if (!checked) return <SceneSkeleton />;
-  if (!webglSupported) return <ChairFallback />;
+  if (!webglSupported) return <HeroFallback />;
 
   return (
     <Suspense fallback={<SceneSkeleton />}>

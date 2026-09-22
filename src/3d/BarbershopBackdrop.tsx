@@ -1,22 +1,16 @@
-import { useMemo, useRef } from "react";
-import { useFrame } from "@react-three/fiber";
-import type * as THREE from "three";
-import {
-  createBarberPoleTexture,
-  createBrickWallTexture,
-  createWoodFloorTexture,
-  createWoodPanelTexture,
-} from "./textures";
+import { useMemo } from "react";
+import { createBrickWallTexture, createWoodFloorTexture, createWoodPanelTexture } from "./textures";
 
 /**
  * Interior de barbería propio y original: ladrillo arriba, paneles de
- * madera abajo, piso de madera, lámparas colgantes y un poste de
- * barbería giratorio — todo generado por código (texturas en <canvas> +
- * geometría propia), sin fotografías de terceros.
+ * madera abajo, piso de madera y lámparas colgantes — todo generado por
+ * código (texturas en <canvas> + geometría propia), sin fotografías de
+ * terceros. El poste de barbería es ahora el objeto protagonista del
+ * Hero (ver `HeroBarberPole.tsx`), así que no se repite aquí de fondo.
  */
 interface BarbershopBackdropProps {
   enableShadows: boolean;
-  /** Desactiva lámparas, espejos y el poste en gama baja. */
+  /** Desactiva lámparas y espejos en gama baja. */
   showDetails: boolean;
 }
 
@@ -34,30 +28,6 @@ function PendantLight({ x, castShadow }: { x: number; castShadow: boolean }) {
       <mesh position={[0, -0.9, 0]}>
         <sphereGeometry args={[0.05, 12, 12]} />
         <meshStandardMaterial color="#ffe3b0" emissive="#ffb864" emissiveIntensity={2.6} toneMapped={false} />
-      </mesh>
-    </group>
-  );
-}
-
-function BarberPole() {
-  const poleTexture = useMemo(() => createBarberPoleTexture(), []);
-  const ref = useRef<THREE.Mesh>(null!);
-  useFrame((_, delta) => {
-    if (ref.current) ref.current.rotation.y += delta * 1.1;
-  });
-  return (
-    <group position={[-4.4, 1.5, -1.8]}>
-      <mesh ref={ref} castShadow>
-        <cylinderGeometry args={[0.13, 0.13, 1.5, 24]} />
-        <meshStandardMaterial map={poleTexture} roughness={0.4} />
-      </mesh>
-      <mesh position={[0, 0.82, 0]}>
-        <sphereGeometry args={[0.15, 16, 16]} />
-        <meshStandardMaterial color="#c9a24b" metalness={1} roughness={0.25} />
-      </mesh>
-      <mesh position={[0, -0.82, 0]}>
-        <cylinderGeometry args={[0.15, 0.15, 0.1, 16]} />
-        <meshStandardMaterial color="#c9a24b" metalness={1} roughness={0.25} />
       </mesh>
     </group>
   );
@@ -102,8 +72,6 @@ export function BarbershopBackdrop({ enableShadows, showDetails }: BarbershopBac
               <meshStandardMaterial color="#cfd6dd" roughness={0.15} metalness={0.6} />
             </mesh>
           ))}
-
-          <BarberPole />
         </>
       )}
     </group>

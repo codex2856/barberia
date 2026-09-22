@@ -1,15 +1,17 @@
 import { useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
-import { BarberChair } from "./BarberChair";
+import { HeroObject } from "./HeroObject";
 
 interface PointerRigProps {
   /** Desactiva la inclinación vertical y reduce la sensibilidad (reduced motion). */
   subtle: boolean;
-  /** Desplazamiento horizontal de la silla (0 en móvil, centrada). */
+  /** Desplazamiento horizontal del objeto 3D (0 en móvil, centrado). */
   offsetX: number;
-  /** Escala de la silla (más pequeña en móvil para no tapar el texto). */
+  /** Escala del objeto 3D (más pequeña en móvil para no tapar el texto). */
   scale: number;
+  /** Detiene el giro continuo de las franjas del poste (reduced motion). */
+  reducedMotion: boolean;
 }
 
 const MAX_YAW = 0.62;
@@ -21,7 +23,7 @@ const DRAG_SENSITIVITY = 3.2;
  * drag/swipe (touch). El movimiento se amortigua cada frame para que
  * nunca se sienta brusco.
  */
-export function PointerRig({ subtle, offsetX, scale }: PointerRigProps) {
+export function PointerRig({ subtle, offsetX, scale, reducedMotion }: PointerRigProps) {
   const groupRef = useRef<THREE.Group>(null!);
   const target = useRef({ x: 0, y: 0 });
   const drag = useRef({ active: false, lastX: 0 });
@@ -73,5 +75,5 @@ export function PointerRig({ subtle, offsetX, scale }: PointerRigProps) {
     groupRef.current.rotation.x += (targetPitch - groupRef.current.rotation.x) * smoothing;
   });
 
-  return <BarberChair ref={groupRef} position={[offsetX, -1.2, 0]} scale={scale} />;
+  return <HeroObject ref={groupRef} spin={!reducedMotion} position={[offsetX, -1.2, 0]} scale={scale} />;
 }
