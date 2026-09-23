@@ -27,7 +27,11 @@ export function Hero() {
   return (
     <section id="inicio" className="relative flex h-[100svh] min-h-[640px] w-full items-center overflow-hidden bg-[#2a1d17]">
       <div className="absolute inset-0">
-        <img src="/hero/barbershop.jpg" alt="Herramientas de barbería" className="h-full w-full object-cover" />
+        <img
+          src={`${import.meta.env.BASE_URL}hero/barbershop.jpg`}
+          alt="Herramientas de barbería"
+          className="h-full w-full object-cover"
+        />
       </div>
 
       {/* degradados para legibilidad del texto sobre la imagen: en móvil el
