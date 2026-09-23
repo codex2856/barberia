@@ -26,26 +26,16 @@ export function Hero() {
 
   return (
     <section id="inicio" className="relative flex h-[100svh] min-h-[640px] w-full items-center overflow-hidden bg-[#2a1d17]">
-      {/*
-        PLACEHOLDER: pendiente de la foto real del Hero (el usuario la
-        subirá). Mientras tanto no hay archivo en /public/hero/, así que
-        el <img> no se pinta y queda el fondo sólido de la sección —
-        nada se rompe, solo falta la imagen.
-      */}
       <div className="absolute inset-0">
-        <img
-          src="/hero/barbershop.jpg"
-          alt="Interior de la barbería"
-          className="h-full w-full object-cover"
-          onError={(e) => {
-            e.currentTarget.style.display = "none";
-          }}
-        />
+        <img src="/hero/barbershop.jpg" alt="Herramientas de barbería" className="h-full w-full object-cover" />
       </div>
 
-      {/* degradados para legibilidad del texto sobre la imagen */}
+      {/* degradados para legibilidad del texto sobre la imagen: en móvil el
+          texto ocupa casi todo el ancho, así que ahí el velo es más fuerte
+          y parejo; en desktop se concentra a la izquierda, donde está el
+          texto, dejando la imagen más nítida a la derecha. */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#2a1d17] via-[#2a1d17]/10 to-[#2a1d17]/40" />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#2a1d17]/80 via-transparent to-[#2a1d17]/30" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#2a1d17]/90 via-[#2a1d17]/55 to-[#2a1d17]/45 sm:from-[#2a1d17]/80 sm:via-transparent sm:to-[#2a1d17]/30" />
 
       <div ref={contentRef} className="relative z-10 mx-auto w-full max-w-7xl px-5 sm:px-8">
         <div className="max-w-xl">
