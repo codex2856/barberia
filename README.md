@@ -1,9 +1,8 @@
 # The Barber
 
-Web premium para una barbería, construida como experiencia inmersiva 3D: una
-silla de barbería en Three.js/React Three Fiber como pieza central del Hero,
-reserva de citas integrada y todo el contenido comercial (servicios, horarios,
-reseñas, ubicación) en HTML semántico y accesible.
+Web premium para una barbería: imagen de portada en el Hero, reserva de
+citas integrada y todo el contenido comercial (servicios, horarios, reseñas,
+ubicación) en HTML semántico y accesible.
 
 **"The Barber" es un nombre provisional** — ver `src/data/barbershop.ts` para
 cambiarlo, junto con el resto de datos del negocio (horarios, dirección,
@@ -12,7 +11,6 @@ teléfono, redes sociales), sin tocar ningún componente.
 ## Stack
 
 - React 19 + Vite + TypeScript
-- Three.js + React Three Fiber + @react-three/drei
 - GSAP + ScrollTrigger para animaciones de scroll
 - Lenis para smooth scrolling
 - Tailwind CSS v4
@@ -21,26 +19,18 @@ teléfono, redes sociales), sin tocar ningún componente.
 
 ```
 src/
-  3d/           escena 3D del Hero (silla, luces, cámara, interacción)
   components/   componentes de UI y de la reserva
   data/         contenido editable: servicios, horarios, reseñas, redes…
-  hooks/        hooks de dispositivo, media queries, scroll
+  hooks/        hooks de media queries, scroll, reduced motion
   sections/     secciones de la landing (Hero, Servicios, Galería…)
-  utils/        heurísticas de rendimiento/capacidad del dispositivo
 ```
 
-## El objeto 3D del Hero
+## Imagen del Hero
 
-Hoy es un poste de barbería procedural (primitivas de Three.js) pensado
-como placeholder: reproduce el símbolo clásico de una barbería sin
-depender de un archivo externo. Cuando haya un modelo GLB/GLTF real, basta
-con:
-
-1. Colocarlo en `public/models/hero-object.glb`.
-2. Definir `HERO_MODEL_URL` en `src/3d/HeroObject.tsx`.
-
-El resto de la interacción (rotación por cursor/drag, reacción al scroll,
-iluminación) no cambia.
+`Hero.tsx` espera el archivo `public/hero/barbershop.jpg` (portada del
+Hero). Mientras no exista, el `<img>` simplemente no se pinta (hay un
+`onError` que lo oculta) y queda el fondo sólido de la sección — nada se
+rompe, solo falta la foto.
 
 ## Reserva de citas
 

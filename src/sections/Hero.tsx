@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { LazyBarberChairScene } from "../3d/LazyBarberChairScene";
 import { Button } from "../components/ui/Button";
 import { useBooking } from "../components/booking/BookingContext";
 import { ArrowRightIcon } from "../components/ui/icons";
@@ -27,11 +26,24 @@ export function Hero() {
 
   return (
     <section id="inicio" className="relative flex h-[100svh] min-h-[640px] w-full items-center overflow-hidden bg-[#2a1d17]">
+      {/*
+        PLACEHOLDER: pendiente de la foto real del Hero (el usuario la
+        subirá). Mientras tanto no hay archivo en /public/hero/, así que
+        el <img> no se pinta y queda el fondo sólido de la sección —
+        nada se rompe, solo falta la imagen.
+      */}
       <div className="absolute inset-0">
-        <LazyBarberChairScene heroSelector="#inicio" />
+        <img
+          src="/hero/barbershop.jpg"
+          alt="Interior de la barbería"
+          className="h-full w-full object-cover"
+          onError={(e) => {
+            e.currentTarget.style.display = "none";
+          }}
+        />
       </div>
 
-      {/* degradados para legibilidad del texto sobre la escena 3D */}
+      {/* degradados para legibilidad del texto sobre la imagen */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#2a1d17] via-[#2a1d17]/10 to-[#2a1d17]/40" />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#2a1d17]/80 via-transparent to-[#2a1d17]/30" />
 
