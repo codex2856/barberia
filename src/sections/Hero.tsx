@@ -4,7 +4,6 @@ import { Button } from "../components/ui/Button";
 import { useBooking } from "../components/booking/BookingContext";
 import { ArrowRightIcon } from "../components/ui/icons";
 import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
-import { HeroChairSpinner } from "../components/HeroChairSpinner";
 
 export function Hero() {
   const { openBooking } = useBooking();
@@ -30,7 +29,13 @@ export function Hero() {
       id="inicio"
       className="relative flex h-[100svh] min-h-[640px] w-full items-center overflow-hidden bg-[#2a1d17]"
     >
-      <HeroChairSpinner />
+      <div className="absolute inset-0">
+        <img
+          src={`${import.meta.env.BASE_URL}hero/barbershop.jpg`}
+          alt="Silla de barbero clásica en un rincón de la barbería"
+          className="h-full w-full object-cover"
+        />
+      </div>
 
       {/* degradados para legibilidad del texto sobre la imagen: en móvil el
           texto ocupa casi todo el ancho, así que ahí el velo es más fuerte
