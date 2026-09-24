@@ -4,13 +4,12 @@ import { Button } from "../components/ui/Button";
 import { useBooking } from "../components/booking/BookingContext";
 import { ArrowRightIcon } from "../components/ui/icons";
 import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
-import { useParallaxImage } from "../hooks/useParallaxImage";
+import { HeroChairSpinner } from "../components/HeroChairSpinner";
 
 export function Hero() {
   const { openBooking } = useBooking();
   const contentRef = useRef<HTMLDivElement>(null);
   const reducedMotion = usePrefersReducedMotion();
-  const { containerRef, imageRef } = useParallaxImage<HTMLElement, HTMLImageElement>(18);
 
   useEffect(() => {
     if (!contentRef.current) return;
@@ -29,17 +28,9 @@ export function Hero() {
   return (
     <section
       id="inicio"
-      ref={containerRef}
       className="relative flex h-[100svh] min-h-[640px] w-full items-center overflow-hidden bg-[#2a1d17]"
     >
-      <div className="absolute inset-0">
-        <img
-          ref={imageRef}
-          src={`${import.meta.env.BASE_URL}hero/barbershop.jpg`}
-          alt="Silla de barbero clásica"
-          className="h-full w-full scale-[1.08] object-cover transition-transform duration-300 ease-out will-change-transform"
-        />
-      </div>
+      <HeroChairSpinner />
 
       {/* degradados para legibilidad del texto sobre la imagen: en móvil el
           texto ocupa casi todo el ancho, así que ahí el velo es más fuerte

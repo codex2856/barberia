@@ -25,12 +25,18 @@ src/
   sections/     secciones de la landing (Hero, Servicios, Galería…)
 ```
 
-## Imagen del Hero
+## Imagen del Hero: spinner de producto
 
-`Hero.tsx` espera el archivo `public/hero/barbershop.jpg` (portada del
-Hero). Mientras no exista, el `<img>` simplemente no se pinta (hay un
-`onError` que lo oculta) y queda el fondo sólido de la sección — nada se
-rompe, solo falta la foto.
+`HeroChairSpinner.tsx` no usa una sola foto: usa 8 fotos de la misma
+silla (`public/hero/spin/frame-0.jpg` … `frame-7.jpg`), generadas todas
+en una sola imagen tipo "hoja de contacto" para que coincidan
+iluminación/fondo/encuadre, y luego recortadas. Al mover el cursor de
+izquierda a derecha sobre el Hero cambia el frame activo, dando la
+sensación de que la silla gira contigo (como un visor 360° de
+producto) a lo largo de un arco de 180° (perfil izquierdo → frente →
+perfil derecho). No es una rotación 3D real — son fotos fijas — así
+que solo cubre ese arco, no una vuelta completa. Con
+`prefers-reduced-motion` se queda fijo en el frame frontal (índice 3).
 
 ## Reserva de citas
 
