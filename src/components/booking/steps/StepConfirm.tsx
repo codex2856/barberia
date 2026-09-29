@@ -10,7 +10,7 @@ const DATE_FORMATTER = new Intl.DateTimeFormat("es-ES", {
 });
 
 export function StepConfirm() {
-  const { serviceId, date, time, details, confirmationId, closeBooking, reset } = useBooking();
+  const { serviceId, date, time, confirmationId, closeBooking, reset } = useBooking();
   const service = serviceId ? getServiceById(serviceId) : undefined;
 
   function handleClose() {
@@ -41,16 +41,12 @@ export function StepConfirm() {
           <span className="text-bone-faint">Hora: </span>
           <span className="text-bone">{time}</span>
         </p>
-        <p className="mt-1">
-          <span className="text-bone-faint">A nombre de: </span>
-          <span className="text-bone">{details.name}</span>
-        </p>
         {confirmationId && (
           <p className="mt-3 text-xs text-bone-faint">Nº de confirmación: {confirmationId}</p>
         )}
       </div>
       <p className="text-xs text-bone-faint">
-        Recibirás la confirmación en {details.email || "tu email"}. (Simulado — sin envío real todavía.)
+        Guarda tu número de confirmación. Te esperamos en la barbería a la hora reservada.
       </p>
       <Button onClick={handleClose} className="w-full">
         Listo

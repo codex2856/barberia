@@ -1,13 +1,7 @@
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
 import { getServiceById } from "../../data/services";
 
-export type BookingStep = "service" | "date" | "time" | "details" | "confirm";
-
-export interface CustomerDetails {
-  name: string;
-  phone: string;
-  email: string;
-}
+export type BookingStep = "service" | "date" | "time" | "confirm";
 
 interface BookingState {
   isOpen: boolean;
@@ -15,7 +9,6 @@ interface BookingState {
   serviceId: string | null;
   date: string | null;
   time: string | null;
-  details: CustomerDetails;
   confirmationId: string | null;
 }
 
@@ -26,18 +19,16 @@ interface BookingContextValue extends BookingState {
   setService: (serviceId: string) => void;
   setDate: (date: string) => void;
   setTime: (time: string) => void;
-  setDetails: (details: CustomerDetails) => void;
   setConfirmationId: (id: string) => void;
   reset: () => void;
 }
 
-export const STEP_ORDER: BookingStep[] = ["service", "date", "time", "details", "confirm"];
+export const STEP_ORDER: BookingStep[] = ["service", "date", "time", "confirm"];
 
 export const STEP_LABELS: Record<BookingStep, string> = {
   service: "Servicio",
   date: "Fecha",
   time: "Hora",
-  details: "Tus datos",
   confirm: "Confirmar",
 };
 
@@ -47,7 +38,6 @@ const initialState: BookingState = {
   serviceId: null,
   date: null,
   time: null,
-  details: { name: "", phone: "", email: "" },
   confirmationId: null,
 };
 
@@ -83,11 +73,7 @@ export function BookingProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const setTime = useCallback((time: string) => {
-    setState((prev) => ({ ...prev, time, step: "details" }));
-  }, []);
-
-  const setDetails = useCallback((details: CustomerDetails) => {
-    setState((prev) => ({ ...prev, details }));
+    setState((prev) => ({ ...prev, time }));
   }, []);
 
   const setConfirmationId = useCallback((confirmationId: string) => {
@@ -105,11 +91,10 @@ export function BookingProvider({ children }: { children: ReactNode }) {
       setService,
       setDate,
       setTime,
-      setDetails,
       setConfirmationId,
       reset,
     }),
-    [state, openBooking, closeBooking, goToStep, setService, setDate, setTime, setDetails, setConfirmationId, reset],
+    [state, openBooking, closeBooking, goToStep, setService, setDate, setTime, setConfirmationId, reset],
   );
 
   return <BookingContext.Provider value={value}>{children}</BookingContext.Provider>;

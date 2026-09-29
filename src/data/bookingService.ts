@@ -10,9 +10,6 @@ export interface BookingPayload {
   serviceId: string;
   date: string; // ISO yyyy-mm-dd
   time: string; // HH:mm
-  name: string;
-  phone: string;
-  email: string;
 }
 
 export interface BookingResult {

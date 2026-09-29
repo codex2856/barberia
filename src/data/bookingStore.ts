@@ -14,6 +14,12 @@
  * carga de página (se probó y falló exactamente así). Sigue siendo 100%
  * local al navegador de quien reserva — no se envía a ningún sitio.
  *
+ * A propósito NO se piden ni se guardan datos personales (nombre,
+ * teléfono, email) todavía: el sitio no tiene banner de cookies ni
+ * política de privacidad, así que reservar solo pide servicio + fecha +
+ * hora. En cuanto haya un backend real y ese aviso legal, es el momento
+ * de reintroducir un paso de contacto.
+ *
  * En cuanto se conecte un backend real (Google Calendar, base de datos
  * propia), basta con reemplazar las funciones de este archivo por
  * llamadas a esa API sin tocar `availability.ts` ni la UI, que solo
@@ -29,9 +35,6 @@ export interface ConfirmedBooking {
   date: string; // YYYY-MM-DD
   time: string; // HH:mm
   serviceId: string;
-  name: string;
-  phone: string;
-  email: string;
   confirmationId: string;
   createdAt: string; // ISO timestamp
 }

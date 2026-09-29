@@ -3,7 +3,6 @@ import { STEP_LABELS, STEP_ORDER, useBooking, type BookingStep } from "./Booking
 import { StepService } from "./steps/StepService";
 import { StepDate } from "./steps/StepDate";
 import { StepTime } from "./steps/StepTime";
-import { StepDetails } from "./steps/StepDetails";
 import { StepConfirm } from "./steps/StepConfirm";
 import { CloseIcon, ChevronLeftIcon } from "../ui/icons";
 
@@ -11,7 +10,6 @@ const STEP_COMPONENTS: Record<BookingStep, ComponentType> = {
   service: StepService,
   date: StepDate,
   time: StepTime,
-  details: StepDetails,
   confirm: StepConfirm,
 };
 
@@ -90,7 +88,7 @@ export function BookingDrawer() {
 
         {step !== "confirm" && (
           <ol className="flex gap-1.5 px-5 pt-4" aria-label="Progreso de la reserva">
-            {STEP_ORDER.slice(0, 4).map((s, i) => (
+            {STEP_ORDER.slice(0, -1).map((s, i) => (
               <li
                 key={s}
                 className={`h-1 flex-1 rounded-full transition-colors ${i <= stepIndex ? "bg-gold" : "bg-white/10"}`}
