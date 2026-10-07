@@ -1,4 +1,4 @@
-import { isSchedulePlaceholder, schedule } from "../data/schedule";
+import { schedule } from "../data/schedule";
 import { SectionHeading } from "../components/ui/SectionHeading";
 import { RevealOnScroll } from "../components/ui/RevealOnScroll";
 
@@ -9,12 +9,7 @@ export function Schedule() {
     <section id="horarios" className="bg-void py-24 sm:py-32" aria-labelledby="horarios-heading">
       <div className="mx-auto max-w-3xl px-5 sm:px-8">
         <RevealOnScroll className="mx-auto flex max-w-2xl flex-col items-center">
-          <SectionHeading
-            id="horarios-heading"
-            eyebrow="Horarios"
-            title="HORARIOS"
-            description={isSchedulePlaceholder ? "Horario orientativo, pendiente de confirmación definitiva." : undefined}
-          />
+          <SectionHeading id="horarios-heading" eyebrow="Horarios" title="HORARIOS" />
         </RevealOnScroll>
 
         <RevealOnScroll className="mt-12">
@@ -25,7 +20,7 @@ export function Schedule() {
                 className={`flex items-center justify-between px-6 py-4 sm:px-8 ${i === todayIndex ? "bg-gold/5" : ""}`}
               >
                 <span
-                  className={`text-sm font-semibold uppercase tracking-[0.2em] ${
+                  className={`text-sm font-semibold uppercase tracking-[0.18em] ${
                     i === todayIndex ? "text-gold" : "text-bone-dim"
                   }`}
                 >

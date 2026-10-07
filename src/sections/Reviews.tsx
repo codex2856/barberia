@@ -2,9 +2,6 @@ import { reviews } from "../data/reviews";
 import { SectionHeading } from "../components/ui/SectionHeading";
 import { RevealOnScroll } from "../components/ui/RevealOnScroll";
 import { ReviewCard } from "../components/ReviewCard";
-import { AnimatedNumber } from "../components/ui/AnimatedNumber";
-
-const averageRating = reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
 
 export function Reviews() {
   return (
@@ -15,16 +12,16 @@ export function Reviews() {
             id="resenas-heading"
             eyebrow="Reseñas"
             title="LO QUE DICEN NUESTROS CLIENTES"
-            description="Reseñas de ejemplo — se sustituirán por opiniones reales (Google Reviews) en cuanto estén disponibles."
+            description="Opiniones de muestra — esta web es una plantilla de portfolio, no reseñas reales de clientes."
           />
-          <p className="mt-2 font-display text-3xl text-gold">
-            <AnimatedNumber value={averageRating} decimals={1} /> / 5
-          </p>
+          <span className="mt-4 rounded-full border border-gold/50 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.3em] text-gold">
+            Ejemplo
+          </span>
         </RevealOnScroll>
 
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {reviews.map((review, i) => (
-            <RevealOnScroll key={review.id} delay={(i % 4) * 0.08}>
+            <RevealOnScroll key={review.id} delay={(i % 4) * 0.06}>
               <ReviewCard review={review} />
             </RevealOnScroll>
           ))}

@@ -12,7 +12,7 @@ export function Gallery() {
             id="cortes-heading"
             eyebrow="Galería"
             title="NUESTRO TRABAJO"
-            description="Imágenes de ejemplo — próximamente, fotografías reales de nuestros cortes."
+            description="Marcadores de ejemplo — este espacio está listo para fotografías reales de cortes."
           />
         </RevealOnScroll>
 

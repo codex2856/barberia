@@ -1,5 +1,4 @@
 import { barbershop } from "../data/barbershop";
-import { SocialRow } from "./SocialRow";
 
 const FOOTER_LINKS = [
   { href: "#servicios", label: "Servicios" },
@@ -20,7 +19,7 @@ export function Footer() {
           <ul className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
             {FOOTER_LINKS.map((link) => (
               <li key={link.href}>
-                <a href={link.href} className="text-xs uppercase tracking-[0.2em] text-bone-dim hover:text-gold">
+                <a href={link.href} className="text-xs uppercase tracking-[0.18em] text-bone-dim hover:text-gold">
                   {link.label}
                 </a>
               </li>
@@ -28,11 +27,7 @@ export function Footer() {
           </ul>
         </nav>
 
-        <SocialRow />
-
-        <p className="mt-4 text-xs text-bone-faint">
-          © {new Date().getFullYear()} {barbershop.name}. Todos los derechos reservados.
-        </p>
+        <p className="mt-4 text-xs text-bone-faint">Proyecto demo — plantilla de portfolio, no un negocio real.</p>
       </div>
     </footer>
   );

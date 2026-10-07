@@ -1,7 +1,7 @@
 /**
- * Horarios de apertura — ÚNICA fuente de verdad.
- * PLACEHOLDER — todavía no son los horarios reales del negocio.
- * Editar `RAW_SCHEDULE` cuando se confirmen los horarios definitivos.
+ * Horarios de apertura — ÚNICA fuente de verdad. Son horarios ficticios
+ * (esta web es una plantilla de portfolio) pero pulidos y definitivos
+ * para la demo — editar `RAW_SCHEDULE` para reutilizar con un negocio real.
  *
  * `src/data/availability.ts` lee de aquí (vía `getScheduleForWeekday`)
  * para generar las horas reservables. Antes existía un horario
@@ -22,8 +22,6 @@ export interface DaySchedule {
   hours: string | null;
   closed: boolean;
 }
-
-export const isSchedulePlaceholder = true;
 
 /** Índice 0 = lunes … 6 = domingo (igual que se muestra en la UI). */
 const RAW_SCHEDULE: Array<Pick<DaySchedule, "day" | "shortDay" | "open" | "close" | "closed">> = [

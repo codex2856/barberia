@@ -13,7 +13,7 @@ export interface Service {
   /** Duración en minutos, o null si aún no está confirmada. */
   duration: number | null;
   popular?: boolean;
-  /** Etiqueta corta opcional (ej. "Edición Navidad"). */
+  /** Etiqueta corta opcional (ej. "Popular", "Nuevo"). */
   badge?: string;
 }
 
@@ -50,42 +50,6 @@ export const services: Service[] = [
     name: "Corte + diseño",
     price: 21,
     duration: 30,
-  },
-  {
-    id: "corte-navidad",
-    name: "Corte navidad",
-    price: 25,
-    duration: 30,
-    badge: "Edición navidad",
-  },
-  {
-    id: "corte-barba-navidad",
-    name: "Corte + barba navidad",
-    price: 25,
-    duration: 30,
-    badge: "Edición navidad",
-  },
-  {
-    id: "corte-barba-cejas-navidad",
-    name: "Corte + barba + cejas navidad",
-    price: 30,
-    duration: 30,
-    badge: "Edición navidad",
-  },
-  {
-    id: "corte-fin-de-ano",
-    name: "Corte fin de año",
-    price: 30,
-    duration: 30,
-    badge: "Edición fin de año",
-  },
-  {
-    id: "corte-barba-fin-de-ano",
-    name: "Corte + barba fin de año",
-    // Precio y duración todavía no confirmados — no inventar.
-    price: null,
-    duration: null,
-    badge: "Edición fin de año",
   },
 ];
 

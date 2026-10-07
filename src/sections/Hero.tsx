@@ -20,7 +20,7 @@ export function Hero() {
     gsap.fromTo(
       targets,
       { opacity: 0, y: 26 },
-      { opacity: 1, y: 0, duration: 1, stagger: 0.12, ease: "power3.out", delay: 0.15 },
+      { opacity: 1, y: 0, duration: 1, stagger: 0.08, ease: "power3.out", delay: 0.15 },
     );
   }, [reducedMotion]);
 
@@ -46,7 +46,7 @@ export function Hero() {
 
       <div ref={contentRef} className="relative z-10 mx-auto w-full max-w-7xl px-5 sm:px-8">
         <div className="max-w-xl">
-          <p data-hero-in className="font-body text-xs font-bold uppercase tracking-[0.4em] text-gold">
+          <p data-hero-in className="font-body text-xs font-bold uppercase tracking-[0.35em] text-gold">
             The Barber
           </p>
           <h1 data-hero-in className="mt-4 font-display text-6xl leading-[0.92] text-bone sm:text-7xl md:text-8xl">

@@ -26,12 +26,12 @@ export function GalleryTile({ item }: GalleryTileProps) {
     <div
       ref={tiltRef}
       role="img"
-      aria-label={`Placeholder de corte de estilo ${item.style} — pendiente de sustituir por fotografía real`}
+      aria-label={`Marcador de ejemplo para el estilo ${item.style} — listo para sustituir por una fotografía real`}
       className="group relative aspect-[4/5] overflow-hidden rounded-xl border border-white/10"
       style={{ willChange: "transform" }}
     >
       <div
-        className={`absolute inset-0 bg-gradient-to-br ${GRADIENTS[item.id] ?? "from-charcoal-light to-void"} transition-transform duration-700 ease-out group-hover:scale-110`}
+        className={`absolute inset-0 bg-gradient-to-br ${GRADIENTS[item.id] ?? "from-charcoal-light to-void"} transition-transform duration-500 ease-out group-hover:scale-110`}
       />
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-t from-void/80 via-transparent to-transparent" />
       <div className="absolute inset-0 flex flex-col justify-end p-5">

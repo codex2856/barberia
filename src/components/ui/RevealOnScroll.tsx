@@ -32,7 +32,7 @@ export function RevealOnScroll({ children, className = "", delay = 0, y = 28 }: 
       start: "top 88%",
       once: true,
       onEnter: () => {
-        gsap.to(el, { opacity: 1, y: 0, duration: 0.9, delay, ease: "power3.out" });
+        gsap.to(el, { opacity: 1, y: 0, duration: 0.7, delay, ease: "power3.out" });
       },
     });
 

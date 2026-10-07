@@ -55,12 +55,12 @@ export function BookingDrawer() {
         type="button"
         aria-label="Cerrar reserva"
         onClick={closeBooking}
-        className="absolute inset-0 bg-void/80 backdrop-blur-sm"
+        className="absolute inset-0 bg-void/80 opacity-100 backdrop-blur-sm transition-opacity duration-300 ease-out starting:opacity-0"
       />
       <div
         ref={panelRef}
         tabIndex={-1}
-        className="absolute inset-y-0 right-0 flex w-full max-w-md flex-col bg-charcoal shadow-[var(--shadow-lift)] outline-none sm:border-l sm:border-white/10 max-sm:inset-x-0 max-sm:top-auto max-sm:h-[92vh] max-sm:rounded-t-3xl"
+        className="absolute inset-y-0 right-0 flex w-full max-w-md translate-x-0 translate-y-0 flex-col bg-charcoal shadow-[var(--shadow-lift)] outline-none transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] starting:translate-x-full sm:border-l sm:border-white/10 max-sm:inset-x-0 max-sm:top-auto max-sm:h-[92vh] max-sm:rounded-t-3xl max-sm:starting:translate-x-0 max-sm:starting:translate-y-full"
       >
         <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
           <div className="flex items-center gap-2">
@@ -85,6 +85,10 @@ export function BookingDrawer() {
             <CloseIcon className="h-5 w-5" />
           </button>
         </div>
+
+        <p className="border-b border-white/10 bg-gold/5 px-5 py-2 text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-gold">
+          Simulación — no se procesa ninguna cita real
+        </p>
 
         {step !== "confirm" && (
           <ol className="flex gap-1.5 px-5 pt-4" aria-label="Progreso de la reserva">

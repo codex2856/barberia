@@ -1,7 +1,6 @@
 import { barbershop } from "../data/barbershop";
 import { SectionHeading } from "../components/ui/SectionHeading";
 import { RevealOnScroll } from "../components/ui/RevealOnScroll";
-import { SocialRow } from "../components/SocialRow";
 import { Button } from "../components/ui/Button";
 import { useBooking } from "../components/booking/BookingContext";
 
@@ -22,14 +21,14 @@ export function Contact() {
           <RevealOnScroll>
             <div className="flex h-full flex-col justify-between gap-8 rounded-2xl border border-white/10 bg-white/[0.02] p-8">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-gold">Dirección (a confirmar)</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-gold">Dirección</p>
                 <address className="mt-3 not-italic text-lg text-bone">
                   {barbershop.addressPlaceholder}
                   <br />
                   {barbershop.cityPlaceholder}
                 </address>
 
-                <p className="mt-6 text-xs font-semibold uppercase tracking-[0.3em] text-gold">Contacto (a confirmar)</p>
+                <p className="mt-6 text-xs font-semibold uppercase tracking-[0.3em] text-gold">Contacto</p>
                 <p className="mt-3 text-bone-dim">
                   <a href={`tel:${barbershop.phonePlaceholder.replace(/\s/g, "")}`} className="hover:text-gold">
                     {barbershop.phonePlaceholder}
@@ -54,20 +53,13 @@ export function Contact() {
                   Agendar cita
                 </Button>
               </div>
-
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-gold">Síguenos</p>
-                <div className="mt-4">
-                  <SocialRow />
-                </div>
-              </div>
             </div>
           </RevealOnScroll>
 
           <RevealOnScroll delay={0.1}>
             <div
               role="img"
-              aria-label="Mapa de ubicación pendiente de configurar con la dirección real"
+              aria-label="Ilustración decorativa de mapa — plantilla de portfolio, no muestra una ubicación real"
               className="relative flex h-full min-h-[320px] items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-[radial-gradient(circle_at_center,rgba(201,162,75,0.08),transparent_65%)]"
             >
               <div className="absolute inset-0 opacity-30 [background-image:linear-gradient(rgba(243,239,228,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(243,239,228,0.06)_1px,transparent_1px)] [background-size:32px_32px]" />
@@ -75,7 +67,7 @@ export function Contact() {
                 <span className="flex h-12 w-12 items-center justify-center rounded-full border border-gold/50 text-gold">
                   ◎
                 </span>
-                <p className="text-sm text-bone-dim">Mapa disponible cuando se confirme la ubicación</p>
+                <p className="text-sm text-bone-dim">Mapa de ejemplo — plantilla de portfolio</p>
               </div>
             </div>
           </RevealOnScroll>

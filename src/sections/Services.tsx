@@ -14,7 +14,7 @@ export function Services() {
 
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {popularServices.map((service, i) => (
-            <RevealOnScroll key={service.id} delay={i * 0.1}>
+            <RevealOnScroll key={service.id} delay={i * 0.08}>
               <ServiceCard service={service} />
             </RevealOnScroll>
           ))}
