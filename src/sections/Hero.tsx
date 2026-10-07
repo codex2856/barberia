@@ -29,6 +29,10 @@ export function Hero() {
       id="inicio"
       className="relative flex h-[100svh] min-h-[640px] w-full items-center overflow-hidden bg-[#2a1d17]"
     >
+      {/* public/hero/barbershop.jpg: imagen generada con IA (Gemini), no es
+          una fotografía real ni de stock — sin problema de licencia de
+          terceros, consistente con que el resto del contenido visual del
+          sitio también es original/generado. */}
       <div className="absolute inset-0">
         <img
           src={`${import.meta.env.BASE_URL}hero/barbershop.jpg`}

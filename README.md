@@ -35,7 +35,9 @@ src/
 
 `Hero.tsx` espera el archivo `public/hero/barbershop.jpg` (portada del
 Hero): una foto fija, sin animación de rotación ni parallax — solo la
-imagen con los degradados de legibilidad encima del texto.
+imagen con los degradados de legibilidad encima del texto. Es una imagen
+generada con IA (Gemini), no una fotografía real ni de stock — sin
+problema de licencia de terceros.
 
 ## Reserva de citas
 
