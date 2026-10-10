@@ -1,7 +1,9 @@
 import { useTilt } from "../hooks/useTilt";
-import { formatDuration, formatPrice, type Service } from "../data/services";
+import { formatDuration, formatPrice, getServiceName, type Service } from "../data/services";
 import { useBooking } from "./booking/BookingContext";
 import { Button } from "./ui/Button";
+import { useLanguage } from "../i18n/LanguageContext";
+import { strings } from "../i18n/strings";
 
 interface ServiceCardProps {
   service: Service;
@@ -10,6 +12,7 @@ interface ServiceCardProps {
 export function ServiceCard({ service }: ServiceCardProps) {
   const tiltRef = useTilt<HTMLDivElement>(6);
   const { openBooking } = useBooking();
+  const { language } = useLanguage();
 
   return (
     <div
@@ -18,12 +21,14 @@ export function ServiceCard({ service }: ServiceCardProps) {
       style={{ transformStyle: "preserve-3d", willChange: "transform" }}
     >
       <div>
-        <h3 className="font-display text-2xl text-bone">{service.name}</h3>
-        <p className="mt-3 font-display text-4xl text-gold">{formatPrice(service.price)}</p>
-        <p className="mt-1 text-sm uppercase tracking-widest text-bone-faint">{formatDuration(service.duration)}</p>
+        <h3 className="font-display text-2xl text-bone">{getServiceName(service, language)}</h3>
+        <p className="mt-3 font-display text-4xl text-gold">{formatPrice(service.price, language)}</p>
+        <p className="mt-1 text-sm uppercase tracking-widest text-bone-faint">
+          {formatDuration(service.duration, language)}
+        </p>
       </div>
       <Button className="mt-8 w-full" onClick={() => openBooking(service.id)}>
-        Agendar
+        {strings.common.agendar[language]}
       </Button>
     </div>
   );

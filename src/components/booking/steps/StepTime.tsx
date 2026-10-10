@@ -2,9 +2,12 @@ import { useEffect, useState } from "react";
 import { mockAvailabilityProvider, type TimeSlot } from "../../../data/availability";
 import { submitBooking, SlotUnavailableError } from "../../../data/bookingService";
 import { useBooking } from "../BookingContext";
+import { useLanguage } from "../../../i18n/LanguageContext";
+import { strings } from "../../../i18n/strings";
 
 export function StepTime() {
   const { serviceId, date, time, setTime, setConfirmationId } = useBooking();
+  const { language } = useLanguage();
   const [slots, setSlots] = useState<TimeSlot[] | null>(null);
   const [submittingTime, setSubmittingTime] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -31,11 +34,11 @@ export function StepTime() {
       setConfirmationId(result.confirmationId);
     } catch (err) {
       if (err instanceof SlotUnavailableError) {
-        setError("Justo se acaba de reservar esa hora. Elige otra, por favor.");
+        setError(strings.booking.stepTime.slotTakenError[language]);
         const refreshed = await mockAvailabilityProvider.getAvailableSlots(serviceId, date);
         setSlots(refreshed);
       } else {
-        setError("No se pudo confirmar la cita. Inténtalo de nuevo.");
+        setError(strings.booking.stepTime.genericError[language]);
       }
     } finally {
       setSubmittingTime(null);
@@ -44,21 +47,21 @@ export function StepTime() {
 
   return (
     <div>
-      <h3 className="font-display text-2xl text-bone">ELIGE HORA</h3>
+      <h3 className="font-display text-2xl text-bone">{strings.booking.stepTime.title[language]}</h3>
 
       {slots === null && (
         <p className="mt-5 text-sm text-bone-faint" role="status">
-          Consultando disponibilidad…
+          {strings.booking.stepTime.loading[language]}
         </p>
       )}
 
       {slots !== null && slots.length === 0 && (
-        <p className="mt-5 text-sm text-bone-faint">No hay horario disponible ese día. Elige otra fecha.</p>
+        <p className="mt-5 text-sm text-bone-faint">{strings.booking.stepTime.noSlots[language]}</p>
       )}
 
       {slots !== null && slots.length > 0 && (
         <>
-          <p className="mt-2 text-xs text-bone-faint">Las horas tachadas ya están reservadas o ya pasaron.</p>
+          <p className="mt-2 text-xs text-bone-faint">{strings.booking.stepTime.legend[language]}</p>
           {error && (
             <p role="alert" className="mt-2 text-sm text-red-400">
               {error}
@@ -75,7 +78,11 @@ export function StepTime() {
                   disabled={!slot.available || submittingTime !== null}
                   onClick={() => handleSelect(slot.time)}
                   aria-pressed={selected}
-                  aria-label={slot.available ? `Reservar a las ${slot.time}` : `${slot.time} no disponible`}
+                  aria-label={
+                    slot.available
+                      ? `${strings.booking.stepTime.bookAt[language]} ${slot.time}`
+                      : `${slot.time} ${strings.booking.stepTime.notAvailable[language]}`
+                  }
                   className={`rounded-lg border px-2 py-2.5 text-sm font-medium transition-colors disabled:cursor-not-allowed ${
                     !slot.available
                       ? "border-white/5 bg-white/[0.02] text-bone-faint/40 line-through"

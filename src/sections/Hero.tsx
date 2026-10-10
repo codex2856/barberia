@@ -4,11 +4,14 @@ import { Button } from "../components/ui/Button";
 import { useBooking } from "../components/booking/BookingContext";
 import { ArrowRightIcon } from "../components/ui/icons";
 import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
+import { useLanguage } from "../i18n/LanguageContext";
+import { strings } from "../i18n/strings";
 
 export function Hero() {
   const { openBooking } = useBooking();
   const contentRef = useRef<HTMLDivElement>(null);
   const reducedMotion = usePrefersReducedMotion();
+  const { language } = useLanguage();
 
   useEffect(() => {
     if (!contentRef.current) return;
@@ -36,7 +39,7 @@ export function Hero() {
       <div className="absolute inset-0">
         <img
           src={`${import.meta.env.BASE_URL}hero/barbershop.jpg`}
-          alt="Silla de barbero clásica en un rincón de la barbería"
+          alt={strings.hero.imageAlt[language]}
           className="h-full w-full object-cover"
         />
       </div>
@@ -51,26 +54,27 @@ export function Hero() {
       <div ref={contentRef} className="relative z-10 mx-auto w-full max-w-7xl px-5 sm:px-8">
         <div className="max-w-xl">
           <p data-hero-in className="font-body text-xs font-bold uppercase tracking-[0.35em] text-gold">
-            The Barber
+            {strings.hero.eyebrow[language]}
           </p>
           <h1 data-hero-in className="mt-4 font-display text-6xl leading-[0.92] text-bone sm:text-7xl md:text-8xl">
-            TU ESTILO.
+            {strings.hero.titleLine1[language]}
             <br />
-            TU BARBERÍA.
+            {strings.hero.titleLine2[language]}
           </h1>
           <p data-hero-in className="mt-6 max-w-md text-balance text-base text-bone-dim sm:text-lg">
-            Cortes de precisión, barba y una experiencia pensada al detalle. Reserva tu cita en menos de un minuto.
+            {strings.hero.paragraph[language]}
           </p>
           <div data-hero-in className="mt-9">
             <Button size="lg" onClick={() => openBooking()}>
-              Agendar cita <ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              {strings.common.agendarCita[language]}{" "}
+              <ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Button>
           </div>
         </div>
       </div>
 
       <div className="absolute inset-x-0 bottom-8 z-10 flex flex-col items-center gap-2 text-bone-faint">
-        <span className="text-[10px] font-semibold uppercase tracking-[0.35em]">Scroll to explore</span>
+        <span className="text-[10px] font-semibold uppercase tracking-[0.35em]">{strings.hero.scrollHint[language]}</span>
         <span className="h-9 w-px animate-pulse bg-gradient-to-b from-gold to-transparent" aria-hidden />
       </div>
     </section>

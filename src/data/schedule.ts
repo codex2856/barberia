@@ -1,3 +1,5 @@
+import type { Language } from "../i18n/LanguageContext";
+
 /**
  * Horarios de apertura — ÚNICA fuente de verdad. Son horarios ficticios
  * (esta web es una plantilla de portfolio) pero pulidos y definitivos
@@ -47,4 +49,19 @@ export const schedule: DaySchedule[] = RAW_SCHEDULE.map((d) => ({
 export function getScheduleForWeekday(jsGetDayIndex: number): DaySchedule {
   const index = (jsGetDayIndex + 6) % 7;
   return schedule[index];
+}
+
+const DAY_NAMES_EN: Record<string, string> = {
+  LUN: "Monday",
+  MAR: "Tuesday",
+  MIÉ: "Wednesday",
+  JUE: "Thursday",
+  VIE: "Friday",
+  SÁB: "Saturday",
+  DOM: "Sunday",
+};
+
+export function getDayName(day: DaySchedule, language: Language): string {
+  if (language === "es") return day.day;
+  return DAY_NAMES_EN[day.shortDay] ?? day.day;
 }

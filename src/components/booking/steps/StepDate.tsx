@@ -2,15 +2,21 @@ import { useMemo } from "react";
 import { addDaysIso, todayIso } from "../../../data/availability";
 import { getScheduleForWeekday } from "../../../data/schedule";
 import { useBooking } from "../BookingContext";
-
-const WEEKDAY_FORMATTER = new Intl.DateTimeFormat("es-ES", { weekday: "short" });
-const DAY_FORMATTER = new Intl.DateTimeFormat("es-ES", { day: "2-digit" });
-const MONTH_FORMATTER = new Intl.DateTimeFormat("es-ES", { month: "short" });
+import { useLanguage } from "../../../i18n/LanguageContext";
+import { strings } from "../../../i18n/strings";
 
 const DAYS_AHEAD = 14;
 
+const LOCALE: Record<"es" | "en", string> = { es: "es-ES", en: "en-US" };
+
 export function StepDate() {
   const { date, setDate } = useBooking();
+  const { language } = useLanguage();
+  const locale = LOCALE[language];
+
+  const weekdayFormatter = useMemo(() => new Intl.DateTimeFormat(locale, { weekday: "short" }), [locale]);
+  const dayFormatter = useMemo(() => new Intl.DateTimeFormat(locale, { day: "2-digit" }), [locale]);
+  const monthFormatter = useMemo(() => new Intl.DateTimeFormat(locale, { month: "short" }), [locale]);
 
   const days = useMemo(() => {
     const start = todayIso();
@@ -19,7 +25,7 @@ export function StepDate() {
 
   return (
     <div>
-      <h3 className="font-display text-2xl text-bone">ELIGE FECHA</h3>
+      <h3 className="font-display text-2xl text-bone">{strings.booking.stepDate.title[language]}</h3>
       <div className="mt-5 grid grid-cols-3 gap-2.5 sm:grid-cols-4">
         {days.map((iso) => {
           const d = new Date(`${iso}T00:00:00`);
@@ -37,15 +43,15 @@ export function StepDate() {
               }`}
             >
               <span className="text-[11px] uppercase tracking-wide text-bone-faint">
-                {WEEKDAY_FORMATTER.format(d)}
+                {weekdayFormatter.format(d)}
               </span>
-              <span className="font-display text-xl text-bone">{DAY_FORMATTER.format(d)}</span>
-              <span className="text-[11px] uppercase tracking-wide text-bone-faint">{MONTH_FORMATTER.format(d)}</span>
+              <span className="font-display text-xl text-bone">{dayFormatter.format(d)}</span>
+              <span className="text-[11px] uppercase tracking-wide text-bone-faint">{monthFormatter.format(d)}</span>
             </button>
           );
         })}
       </div>
-      {!date && <p className="mt-4 text-sm text-bone-faint">Los domingos permanecemos cerrados.</p>}
+      {!date && <p className="mt-4 text-sm text-bone-faint">{strings.booking.stepDate.closedNotice[language]}</p>}
     </div>
   );
 }

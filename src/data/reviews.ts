@@ -1,3 +1,5 @@
+import type { Language } from "../i18n/LanguageContext";
+
 /**
  * Reseñas de ejemplo — NO son reseñas reales de clientes. Esta web es una
  * plantilla de portfolio; la sección se marca visiblemente como "EJEMPLO"
@@ -39,3 +41,15 @@ export const reviews: Review[] = [
     text: "El mejor arreglo de barba que me han hecho. Volveré sin duda.",
   },
 ];
+
+const REVIEW_TEXT_EN: Record<string, string> = {
+  "ejemplo-1": "Walked in without an appointment and got seen anyway. The fade came out perfect and the vibe is great.",
+  "ejemplo-2": "Booking online was super quick. The result was flawless — I'll definitely be back.",
+  "ejemplo-3": "Great attention to detail and right on time. I love the style of the place.",
+  "ejemplo-4": "Best beard trim I've ever had. Will definitely return.",
+};
+
+export function getReviewText(review: Review, language: Language): string {
+  if (language === "es") return review.text;
+  return REVIEW_TEXT_EN[review.id] ?? review.text;
+}

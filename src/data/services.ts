@@ -1,9 +1,16 @@
+import type { Language } from "../i18n/LanguageContext";
+
 /**
  * Catálogo de servicios. Editar aquí para cambiar nombre, precio, duración
  * o disponibilidad — no está escrito dentro de los componentes.
  *
  * `price` y `duration` en `null` significan "todavía no confirmado":
  * la UI debe mostrar "a confirmar" en vez de inventar un valor.
+ *
+ * El nombre base (`name`) es el texto en español — es el que usan
+ * `getServiceById` y el resto de la lógica (nunca el id). La traducción
+ * al inglés vive en `SERVICE_NAMES_EN`, indexada por `id`, para no
+ * duplicar todo el array solo por el idioma.
  */
 export interface Service {
   id: string;
@@ -53,6 +60,14 @@ export const services: Service[] = [
   },
 ];
 
+const SERVICE_NAMES_EN: Record<string, string> = {
+  "corte-caballero": "Gentleman's Cut",
+  "corte-cejas": "Cut + Eyebrows",
+  "corte-barba-cejas": "Cut + Beard + Eyebrows",
+  "corte-barba": "Cut + Beard",
+  "corte-diseno": "Cut + Design",
+};
+
 export const popularServices = services.filter((service) => service.popular);
 export const otherServices = services.filter((service) => !service.popular);
 
@@ -60,12 +75,18 @@ export function getServiceById(id: string): Service | undefined {
   return services.find((service) => service.id === id);
 }
 
-export function formatPrice(price: number | null): string {
-  if (price === null) return "Precio a confirmar";
-  return `${price.toFixed(2).replace(".", ",")} €`;
+export function getServiceName(service: Service, language: Language): string {
+  if (language === "es") return service.name;
+  return SERVICE_NAMES_EN[service.id] ?? service.name;
 }
 
-export function formatDuration(duration: number | null): string {
-  if (duration === null) return "Duración a confirmar";
+export function formatPrice(price: number | null, language: Language = "es"): string {
+  if (price === null) return language === "es" ? "Precio a confirmar" : "Price to be confirmed";
+  if (language === "es") return `${price.toFixed(2).replace(".", ",")} €`;
+  return `€${price.toFixed(2)}`;
+}
+
+export function formatDuration(duration: number | null, language: Language = "es"): string {
+  if (duration === null) return language === "es" ? "Duración a confirmar" : "Duration to be confirmed";
   return `${duration} min`;
 }

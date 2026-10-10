@@ -1,3 +1,5 @@
+import type { Language } from "../i18n/LanguageContext";
+
 /**
  * Galería de trabajos. `image` queda vacío hasta tener fotografías reales:
  * mientras tanto la UI renderiza un placeholder visual identificable,
@@ -42,3 +44,22 @@ export const galleryItems: GalleryItem[] = [
     description: "Detalle y definición para un acabado completo.",
   },
 ];
+
+const GALLERY_EN: Record<string, { style: string; description: string }> = {
+  fade: { style: "Fade", description: "Clean blend on the sides and nape." },
+  clasico: { style: "Classic cut", description: "Timeless cut with a polished finish." },
+  barba: { style: "Cut + beard", description: "Beard shaping to match the haircut." },
+  diseno: { style: "Design", description: "Custom razor-lined designs." },
+  textura: { style: "Texture", description: "Natural textured finish on top." },
+  cejas: { style: "Eyebrow shaping", description: "Detail and definition for a complete look." },
+};
+
+export function getGalleryStyle(item: GalleryItem, language: Language): string {
+  if (language === "es") return item.style;
+  return GALLERY_EN[item.id]?.style ?? item.style;
+}
+
+export function getGalleryDescription(item: GalleryItem, language: Language): string {
+  if (language === "es") return item.description;
+  return GALLERY_EN[item.id]?.description ?? item.description;
+}

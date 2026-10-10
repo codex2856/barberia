@@ -3,13 +3,21 @@ import { SectionHeading } from "../components/ui/SectionHeading";
 import { RevealOnScroll } from "../components/ui/RevealOnScroll";
 import { ServiceCard } from "../components/ServiceCard";
 import { OtherServiceRow } from "../components/OtherServiceRow";
+import { useLanguage } from "../i18n/LanguageContext";
+import { strings } from "../i18n/strings";
 
 export function Services() {
+  const { language } = useLanguage();
+
   return (
     <section id="servicios" className="relative bg-charcoal py-24 sm:py-32" aria-labelledby="servicios-heading">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <RevealOnScroll className="mx-auto flex max-w-2xl flex-col items-center">
-          <SectionHeading id="servicios-heading" eyebrow="Servicios" title="SERVICIOS MÁS POPULARES" />
+          <SectionHeading
+            id="servicios-heading"
+            eyebrow={strings.services.eyebrow[language]}
+            title={strings.services.title[language]}
+          />
         </RevealOnScroll>
 
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -21,7 +29,9 @@ export function Services() {
         </div>
 
         <RevealOnScroll className="mx-auto mt-24 max-w-2xl">
-          <h3 className="text-center font-display text-3xl text-bone sm:text-4xl">OTROS SERVICIOS</h3>
+          <h3 className="text-center font-display text-3xl text-bone sm:text-4xl">
+            {strings.services.otherTitle[language]}
+          </h3>
           <ul className="mt-8 rounded-2xl border border-white/10 bg-white/[0.02] px-6 sm:px-8">
             {otherServices.map((service) => (
               <OtherServiceRow key={service.id} service={service} />

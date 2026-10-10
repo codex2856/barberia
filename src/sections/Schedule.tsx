@@ -1,15 +1,22 @@
-import { schedule } from "../data/schedule";
+import { getDayName, schedule } from "../data/schedule";
 import { SectionHeading } from "../components/ui/SectionHeading";
 import { RevealOnScroll } from "../components/ui/RevealOnScroll";
+import { useLanguage } from "../i18n/LanguageContext";
+import { strings } from "../i18n/strings";
 
 export function Schedule() {
   const todayIndex = (new Date().getDay() + 6) % 7; // 0 = lunes
+  const { language } = useLanguage();
 
   return (
     <section id="horarios" className="bg-void py-24 sm:py-32" aria-labelledby="horarios-heading">
       <div className="mx-auto max-w-3xl px-5 sm:px-8">
         <RevealOnScroll className="mx-auto flex max-w-2xl flex-col items-center">
-          <SectionHeading id="horarios-heading" eyebrow="Horarios" title="HORARIOS" />
+          <SectionHeading
+            id="horarios-heading"
+            eyebrow={strings.schedule.eyebrow[language]}
+            title={strings.schedule.title[language]}
+          />
         </RevealOnScroll>
 
         <RevealOnScroll className="mt-12">
@@ -24,10 +31,10 @@ export function Schedule() {
                     i === todayIndex ? "text-gold" : "text-bone-dim"
                   }`}
                 >
-                  {day.day}
+                  {getDayName(day, language)}
                 </span>
                 <span className={`font-display text-lg ${day.closed ? "text-bone-faint" : "text-bone"}`}>
-                  {day.closed ? "Cerrado" : day.hours}
+                  {day.closed ? strings.schedule.closed[language] : day.hours}
                 </span>
               </li>
             ))}

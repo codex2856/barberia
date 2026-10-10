@@ -1,5 +1,7 @@
-import { formatDuration, formatPrice, type Service } from "../data/services";
+import { formatDuration, formatPrice, getServiceName, type Service } from "../data/services";
 import { useBooking } from "./booking/BookingContext";
+import { useLanguage } from "../i18n/LanguageContext";
+import { strings } from "../i18n/strings";
 
 interface OtherServiceRowProps {
   service: Service;
@@ -7,12 +9,13 @@ interface OtherServiceRowProps {
 
 export function OtherServiceRow({ service }: OtherServiceRowProps) {
   const { openBooking } = useBooking();
+  const { language } = useLanguage();
 
   return (
     <li className="flex items-center justify-between gap-4 border-b border-white/8 py-4 last:border-0">
       <div>
         <p className="font-semibold text-bone">
-          {service.name}
+          {getServiceName(service, language)}
           {service.badge && (
             <span className="ml-2 rounded-full bg-wine/50 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-bone-dim">
               {service.badge}
@@ -20,7 +23,7 @@ export function OtherServiceRow({ service }: OtherServiceRowProps) {
           )}
         </p>
         <p className="text-sm text-bone-faint">
-          {formatPrice(service.price)} · {formatDuration(service.duration)}
+          {formatPrice(service.price, language)} · {formatDuration(service.duration, language)}
         </p>
       </div>
       <button
@@ -28,7 +31,7 @@ export function OtherServiceRow({ service }: OtherServiceRowProps) {
         onClick={() => openBooking(service.id)}
         className="shrink-0 rounded-full border border-gold/40 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-gold transition-colors hover:bg-gold hover:text-void"
       >
-        Agendar
+        {strings.common.agendar[language]}
       </button>
     </li>
   );

@@ -1,5 +1,7 @@
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
 import { getServiceById } from "../../data/services";
+import { strings } from "../../i18n/strings";
+import type { Bilingual } from "../../i18n/LanguageContext";
 
 export type BookingStep = "service" | "date" | "time" | "confirm";
 
@@ -25,12 +27,7 @@ interface BookingContextValue extends BookingState {
 
 export const STEP_ORDER: BookingStep[] = ["service", "date", "time", "confirm"];
 
-export const STEP_LABELS: Record<BookingStep, string> = {
-  service: "Servicio",
-  date: "Fecha",
-  time: "Hora",
-  confirm: "Confirmar",
-};
+export const STEP_LABELS: Record<BookingStep, Bilingual> = strings.booking.stepLabels;
 
 const initialState: BookingState = {
   isOpen: false,

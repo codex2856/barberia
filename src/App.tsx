@@ -13,27 +13,30 @@ import { ReservaCTA } from "./sections/ReservaCTA";
 import { Contact } from "./sections/Contact";
 import { useLenis } from "./hooks/useLenis";
 import { usePrefersReducedMotion } from "./hooks/usePrefersReducedMotion";
+import { LanguageProvider } from "./i18n/LanguageContext";
 
 export default function App() {
   const reducedMotion = usePrefersReducedMotion();
   useLenis(!reducedMotion);
 
   return (
-    <BookingProvider>
-      <CustomCursor />
-      <Navbar />
-      <main>
-        <Hero />
-        <Services />
-        <Gallery />
-        <Reviews />
-        <Schedule />
-        <ReservaCTA />
-        <Contact />
-      </main>
-      <Footer />
-      <FloatingWhatsAppButton />
-      <BookingDrawer />
-    </BookingProvider>
+    <LanguageProvider>
+      <BookingProvider>
+        <CustomCursor />
+        <Navbar />
+        <main>
+          <Hero />
+          <Services />
+          <Gallery />
+          <Reviews />
+          <Schedule />
+          <ReservaCTA />
+          <Contact />
+        </main>
+        <Footer />
+        <FloatingWhatsAppButton />
+        <BookingDrawer />
+      </BookingProvider>
+    </LanguageProvider>
   );
 }
