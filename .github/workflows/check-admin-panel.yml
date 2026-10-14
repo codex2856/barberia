@@ -18,10 +18,14 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm run lint
-      - name: Test the admin panel in a real browser
+      - name: Install test browser
         run: |
           npm i --no-save --no-audit --no-fund playwright
           npx playwright install --with-deps chromium
-          npx vite preview --port 4173 --strictPort > preview.log 2>&1 &
-          npx --yes wait-on http://localhost:4173/ --timeout 30000
-          node .github/scripts/e2e-admin.mjs
+      - name: Start preview server
+        run: |
+          nohup npx vite preview --port 4173 --strictPort > preview.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf http://localhost:4173/ >/dev/null && break; sleep 1; done
+          curl -sf http://localhost:4173/ >/dev/null
+      - name: Test the admin panel in a real browser
+        run: node .github/scripts/e2e-admin.mjs

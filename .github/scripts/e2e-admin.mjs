@@ -148,6 +148,11 @@ await step("No uncaught page errors", async () => {
 });
 
 await browser.close();
+for (const line of steps) {
+  const [head, ...rest] = line.split("\n");
+  const msg = [head, ...rest.map((r) => r.trim())].join(" :: ").replace(/%/g, "%25");
+  console.log(head.startsWith("FAIL") ? `::error title=e2e::${msg}` : `::notice title=e2e::${msg}`);
+}
 console.log(steps.join("\n"));
 if (problems.length) {
   console.error(`\n${problems.length} step(s) failed`);
