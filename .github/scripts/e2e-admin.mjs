@@ -129,8 +129,12 @@ await step("Admin: the booking appears and can be cancelled", async () => {
   await page.getByRole("button", { name: "Listo" }).click();
   await page.goto("about:blank");
   await page.goto(ADMIN);
-  await page.getByLabel("Contraseña").fill("barber2026");
-  await page.getByRole("button", { name: "Entrar" }).click();
+  // The session may still be open (sessionStorage), so only log in if asked to.
+  const loginField = page.getByLabel("Contraseña");
+  if (await loginField.isVisible().catch(() => false)) {
+    await loginField.fill("barber2026");
+    await page.getByRole("button", { name: "Entrar" }).click();
+  }
   await page.getByText(`Código ${confirmationId}`).waitFor();
   await page.getByRole("button", { name: "Cancelar cita" }).click();
   await page.getByRole("button", { name: "Sí, cancelar" }).click();
@@ -151,8 +155,9 @@ await browser.close();
 for (const line of steps) {
   const [head, ...rest] = line.split("\n");
   const msg = [head, ...rest.map((r) => r.trim())].join(" :: ").replace(/%/g, "%25");
-  console.log(head.startsWith("FAIL") ? `::error title=e2e::${msg}` : `::notice title=e2e::${msg}`);
+  if (head.startsWith("FAIL")) console.log(`::error title=e2e::${msg}`);
 }
+console.log(`::notice title=e2e::${steps.length - problems.length} of ${steps.length} steps passed`);
 console.log(steps.join("\n"));
 if (problems.length) {
   console.error(`\n${problems.length} step(s) failed`);
