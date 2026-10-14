@@ -1,4 +1,5 @@
 import type { Language } from "../i18n/LanguageContext";
+import { readConfig } from "./adminStore";
 
 /**
  * Galería de trabajos. `image` queda vacío hasta tener fotografías reales:
@@ -12,7 +13,7 @@ export interface GalleryItem {
   image?: string;
 }
 
-export const galleryItems: GalleryItem[] = [
+export const DEFAULT_GALLERY: GalleryItem[] = [
   {
     id: "fade",
     style: "Fade",
@@ -44,6 +45,8 @@ export const galleryItems: GalleryItem[] = [
     description: "Detalle y definición para un acabado completo.",
   },
 ];
+
+export const galleryItems: GalleryItem[] = readConfig().gallery ?? DEFAULT_GALLERY;
 
 const GALLERY_EN: Record<string, { style: string; description: string }> = {
   fade: { style: "Fade", description: "Clean blend on the sides and nape." },

@@ -21,6 +21,7 @@
 import { getServiceById } from "./services";
 import { getScheduleForWeekday } from "./schedule";
 import { isSlotTaken } from "./bookingStore";
+import { isDateBlocked } from "./adminStore";
 
 export interface TimeSlot {
   time: string;
@@ -72,7 +73,7 @@ export const mockAvailabilityProvider: AvailabilityProvider = {
     const date = new Date(`${isoDate}T00:00:00`);
     const daySchedule = getScheduleForWeekday(date.getDay());
 
-    if (daySchedule.closed || !daySchedule.open || !daySchedule.close) {
+    if (isDateBlocked(isoDate) || daySchedule.closed || !daySchedule.open || !daySchedule.close) {
       return [];
     }
 
