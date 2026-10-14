@@ -1,4 +1,5 @@
 import type { Language } from "../i18n/LanguageContext";
+import { readConfig } from "./adminStore";
 
 /**
  * Horarios de apertura — ÚNICA fuente de verdad. Son horarios ficticios
@@ -26,7 +27,9 @@ export interface DaySchedule {
 }
 
 /** Índice 0 = lunes … 6 = domingo (igual que se muestra en la UI). */
-const RAW_SCHEDULE: Array<Pick<DaySchedule, "day" | "shortDay" | "open" | "close" | "closed">> = [
+export type RawScheduleDay = Pick<DaySchedule, "day" | "shortDay" | "open" | "close" | "closed">;
+
+export const DEFAULT_RAW_SCHEDULE: RawScheduleDay[] = [
   { day: "Lunes", shortDay: "LUN", open: "09:00", close: "19:00", closed: false },
   { day: "Martes", shortDay: "MAR", open: "09:00", close: "19:00", closed: false },
   { day: "Miércoles", shortDay: "MIÉ", open: "09:00", close: "19:00", closed: false },
@@ -35,6 +38,8 @@ const RAW_SCHEDULE: Array<Pick<DaySchedule, "day" | "shortDay" | "open" | "close
   { day: "Sábado", shortDay: "SÁB", open: "10:00", close: "15:00", closed: false },
   { day: "Domingo", shortDay: "DOM", open: null, close: null, closed: true },
 ];
+
+const RAW_SCHEDULE: RawScheduleDay[] = readConfig().schedule ?? DEFAULT_RAW_SCHEDULE;
 
 export const schedule: DaySchedule[] = RAW_SCHEDULE.map((d) => ({
   ...d,

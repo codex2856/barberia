@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { addDaysIso, todayIso } from "../../../data/availability";
 import { getScheduleForWeekday } from "../../../data/schedule";
+import { isDateBlocked } from "../../../data/adminStore";
 import { useBooking } from "../BookingContext";
 import { useLanguage } from "../../../i18n/LanguageContext";
 import { strings } from "../../../i18n/strings";
@@ -29,7 +30,7 @@ export function StepDate() {
       <div className="mt-5 grid grid-cols-3 gap-2.5 sm:grid-cols-4">
         {days.map((iso) => {
           const d = new Date(`${iso}T00:00:00`);
-          const isClosed = getScheduleForWeekday(d.getDay()).closed;
+          const isClosed = getScheduleForWeekday(d.getDay()).closed || isDateBlocked(iso);
           const selected = iso === date;
           return (
             <button

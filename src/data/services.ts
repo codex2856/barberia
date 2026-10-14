@@ -1,4 +1,5 @@
 import type { Language } from "../i18n/LanguageContext";
+import { readConfig } from "./adminStore";
 
 /**
  * Catálogo de servicios. Editar aquí para cambiar nombre, precio, duración
@@ -24,7 +25,7 @@ export interface Service {
   badge?: string;
 }
 
-export const services: Service[] = [
+export const DEFAULT_SERVICES: Service[] = [
   {
     id: "corte-caballero",
     name: "Corte caballero",
@@ -59,6 +60,9 @@ export const services: Service[] = [
     duration: 30,
   },
 ];
+
+/** Si el admin editó los servicios, se usan esos; si no, los de la plantilla. */
+export const services: Service[] = readConfig().services ?? DEFAULT_SERVICES;
 
 const SERVICE_NAMES_EN: Record<string, string> = {
   "corte-caballero": "Gentleman's Cut",

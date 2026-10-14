@@ -34,9 +34,18 @@ export function GalleryTile({ item }: GalleryTileProps) {
       className="group relative aspect-[4/5] overflow-hidden rounded-xl border border-white/10"
       style={{ willChange: "transform" }}
     >
-      <div
-        className={`absolute inset-0 bg-gradient-to-br ${GRADIENTS[item.id] ?? "from-charcoal-light to-void"} transition-transform duration-500 ease-out group-hover:scale-110`}
-      />
+      {item.image ? (
+        <img
+          src={item.image}
+          alt=""
+          loading="lazy"
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+        />
+      ) : (
+        <div
+          className={`absolute inset-0 bg-gradient-to-br ${GRADIENTS[item.id] ?? "from-charcoal-light to-void"} transition-transform duration-500 ease-out group-hover:scale-110`}
+        />
+      )}
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-t from-void/80 via-transparent to-transparent" />
       <div className="absolute inset-0 flex flex-col justify-end p-5">
         <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-gold">{style}</p>

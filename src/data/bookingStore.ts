@@ -93,6 +93,16 @@ export function tryCreateBooking(booking: ConfirmedBooking): CreateBookingResult
   return { ok: true };
 }
 
+/** Todas las citas, de la más próxima a la más lejana. Lo usa el panel de admin. */
+export function getAllBookings(): ConfirmedBooking[] {
+  return readAll().sort((a, b) => `${a.date} ${a.time}`.localeCompare(`${b.date} ${b.time}`));
+}
+
+/** Cancela una cita: la hora vuelve a quedar libre. */
+export function cancelBooking(confirmationId: string): void {
+  writeAll(readAll().filter((b) => b.confirmationId !== confirmationId));
+}
+
 /** Solo para pruebas: vacía el registro. */
 export function __resetBookingsForTests(): void {
   writeAll([]);

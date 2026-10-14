@@ -1,0 +1,31 @@
+name: Check admin panel branch
+
+on:
+  push:
+    branches:
+      - admin-panel
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm run lint
+      - name: Install test browser
+        run: |
+          npm i --no-save --no-audit --no-fund playwright
+          npx playwright install --with-deps chromium
+      - name: Start preview server
+        run: |
+          nohup npx vite preview --port 4173 --strictPort > preview.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf http://localhost:4173/ >/dev/null && break; sleep 1; done
+          curl -sf http://localhost:4173/ >/dev/null
+      - name: Test the admin panel in a real browser
+        run: node .github/scripts/e2e-admin.mjs
